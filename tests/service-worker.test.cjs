@@ -15,7 +15,7 @@ function setup() {
       clients:{ claim:async () => { state.claimed = true; } }
     },
     caches: {
-      keys:async () => ['Testbedbeta-v3','unrelated','MonsterMixv2-v7','MonsterMixv2-v8'],
+      keys:async () => ['Testbedbeta-v3','unrelated','MonsterMixv2-v8','MonsterMixv2-v9'],
       delete:async key => state.deleted.push(key),
       open:async name => {
         state.opened.push(name);
@@ -36,13 +36,13 @@ test('install caches all referenced assets including pricing before activating',
 test('activation deletes only old V2 caches and preserves the live app', async () => {
   const { handlers, state } = setup(); let pending;
   handlers.activate({ waitUntil:p => pending = p }); await pending;
-  assert.deepEqual(state.deleted,['MonsterMixv2-v7']);
+  assert.deepEqual(state.deleted,['MonsterMixv2-v8']);
   assert.equal(state.claimed,true);
 });
 test('fetch serves its own cache and ignores other apps and non-GET requests', async () => {
   const { handlers, state } = setup(); let pending;
   handlers.fetch({ request:{ method:'GET',url:'https://spangla.github.io/MonsterMixv2/' },respondWith:p => pending = p });
   assert.equal(await pending,'cached');
-  assert.deepEqual(state.opened,['MonsterMixv2-v8']);
+  assert.deepEqual(state.opened,['MonsterMixv2-v9']);
   for (const request of [{ method:'GET',url:'https://spangla.github.io/Testbedbeta/' },{ method:'POST',url:'https://spangla.github.io/MonsterMixv2/' }]) handlers.fetch({ request,respondWith:() => assert.fail('intercepted unrelated request') });
 });
