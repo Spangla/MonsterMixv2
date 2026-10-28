@@ -9,7 +9,7 @@ button, summary, label:has(input) { cursor: pointer; }
 button, a, input, select, summary, textarea { -webkit-tap-highlight-color: transparent; }
 :focus-visible { outline: 3px solid #247aa7; outline-offset: 3px; }
 .site-header { color: var(--navy); background: white; border-bottom: 4px solid var(--blue); padding-top: env(safe-area-inset-top); }
-.header-inner { max-width: 1160px; margin: auto; padding: 8px max(32px, env(safe-area-inset-right)) 8px max(32px, env(safe-area-inset-left)); display: flex; justify-content: space-between; align-items: center; gap: 16px; }
+.header-inner { max-width: 1160px; margin: auto; padding: 8px max(32px, env(safe-area-inset-right)) 8px max(32px, env(safe-area-inset-left)); display: flex; justify-content: center; align-items: center; gap: 16px; }
 .brand { color: inherit; text-decoration: none; display: flex; align-items: center; gap: 20px; font-size: 14px; font-weight: 750; letter-spacing: 1.3px; line-height: 1.3; }
 .brand img { display: block; width: 224px; height: auto; flex-shrink: 0; }
 .brand small { display: block; font-size: 10px; letter-spacing: 1.8px; margin-top: 8px; color: var(--muted); }
