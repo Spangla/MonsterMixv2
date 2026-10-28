@@ -1,5 +1,5 @@
 const CACHE_PREFIX = 'MonsterMixv2-';
-const CACHE_NAME = `${CACHE_PREFIX}v3`; // bump version when updating files
+const CACHE_NAME = `${CACHE_PREFIX}v4`; // bump version when updating files
 
 const ASSETS_TO_CACHE = [
   './',

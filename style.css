@@ -90,23 +90,17 @@ input[type="radio"], input[type="checkbox"] { accent-color: var(--navy); width: 
 .total-block > span { font-size: 14px; font-weight: 700; }
 .total-block small { display: block; font-size: 11px; font-weight: 400; color: #bdcbd1; margin-top: 3px; }
 .total-block strong { font-size: clamp(26px, 3vw, 36px); color: white; letter-spacing: -1px; overflow-wrap: anywhere; font-variant-numeric: tabular-nums; }
-.quote-actions { display: flex; gap: 9px; margin-top: 25px; }
-.quote-button { background: #15548a; color: white; border-color: #78a2c7; font-size: 12px; padding: 10px 8px; flex: 1; }
-.quote-button:hover { background: #24679e; }
 .quote-status { font-size: 12px; color: white; margin: 12px 0 0; }
 .share-panel { border-top: 1px solid #638cb3; margin-top: 24px; padding-top: 24px; }
 .share-button { background: white; color: var(--navy); width: 100%; }
 .share-button:hover { background: #dcecff; }
 .share-button:disabled { cursor: wait; opacity: .75; }
-.share-hint { font-size: 11px; color: #d5e7f5; line-height: 1.7; margin: 10px 0; }
 .save-image { color: white; display: inline-flex; align-items: center; font-size: 12px; min-height: 44px; text-underline-offset: 4px; }
 .image-preview { border-top: 1px solid #638cb3; margin-top: 8px; }
 .image-preview summary { font-size: 12px; }
 .image-preview img { display: block; width: 100%; height: auto; border-radius: 4px; background: white; }
 .quote-status:empty { display: none; }
 .quote-footnote { font-size: 10px; letter-spacing: .3px; color: #b2c3cb; text-align: center; border-top: 1px solid #3a5260; margin: 25px 0 0; padding-top: 17px; }
-#manual-copy { margin-top: 15px; font-size: 12px; }
-#manual-copy textarea { margin-top: 8px; }
 .rate-card { padding: 0 4px; margin-top: 9px; }
 .rate-card summary { color: var(--muted); font-size: 12px; }
 table { width: 100%; border-collapse: collapse; font-size: 13px; }
@@ -150,7 +144,7 @@ th:last-child, td:last-child { text-align: right; }
   .brand img { width: 90px; height: 90px; }
   .brand small, .test-badge { color: black; }
   .app-shell { padding: 20px; }
-  .intro, #quote-form, .rate-card, .quote-actions, .share-panel, #manual-copy, .site-footer, .quote-status, .update-notice { display: none !important; }
+  .intro, #quote-form, .rate-card, .share-panel, .site-footer, .quote-status, .update-notice { display: none !important; }
   .workspace { display: block; }
   .quote-column { position: static; }
   .quote-card { background: white; color: black; box-shadow: none; border: 1px solid #aaa; break-inside: avoid; }

@@ -71,12 +71,11 @@
             <div class="total-block"><span>Total <small>including VAT</small></span><strong id="total"></strong></div>
             <div class="share-panel">
               <button type="button" class="button share-button" id="share-image" disabled>Preparing image…</button>
-              <p class="share-hint">Choose WhatsApp in your phone’s share menu. You can also save the image and attach it.</p>
-              <a class="save-image" id="save-image" download hidden>Save price image</a>
-              <details class="image-preview" id="image-preview" hidden><summary>Preview price image <span aria-hidden="true">+</span></summary><img id="price-image-preview" alt="Monster Mix customer price breakdown"></details>
+              <div id="share-fallback" hidden>
+                <a class="save-image" id="save-image" download hidden>Save price image</a>
+                <details class="image-preview" id="image-preview" hidden><summary>Preview price image <span aria-hidden="true">+</span></summary><img id="price-image-preview" alt="Monster Mix customer price breakdown"></details>
+              </div>
             </div>
-            <div class="quote-actions"><button type="button" class="button quote-button" id="copy-quote">Copy price</button><button type="button" class="button quote-button" id="print-quote">Print / PDF</button></div>
-            <div id="manual-copy" hidden><label for="quote-text">Select and copy the price breakdown:</label><textarea id="quote-text" readonly rows="10"></textarea></div>
           </div>
           <p id="quote-status" class="quote-status" role="status" aria-live="polite"></p><p class="quote-footnote">V2 test calculation · Not a payment receipt</p>
         </section>

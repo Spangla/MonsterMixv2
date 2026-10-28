@@ -8,8 +8,6 @@ const number = value => volumeFormat.format(value);
 const form = byId('quote-form');
 let currentQuote = null;
 let quoteStarted = false;
-let quoteText = '';
-let copySequence = 0;
 let imageSequence = 0;
 let priceImageFile = null;
 let priceImageUrl = null;
@@ -21,6 +19,7 @@ function clearPriceImage() {
   byId('share-image').disabled = true;
   byId('share-image').textContent = 'Preparing image…';
   byId('save-image').hidden = true;
+  byId('share-fallback').hidden = true;
   byId('save-image').removeAttribute('href');
   byId('image-preview').hidden = true;
   byId('image-preview').open = false;
@@ -38,12 +37,13 @@ async function preparePriceImage(quote) {
     byId('save-image').hidden = false;
     byId('price-image-preview').src = priceImageUrl;
     byId('image-preview').hidden = false;
-    byId('share-image').textContent = 'Forward price image';
+    byId('share-image').textContent = 'Forward as quote';
     byId('share-image').disabled = false;
   } catch (error) {
     if (sequence !== imageSequence || quote !== currentQuote) return;
-    byId('share-image').textContent = 'Image unavailable';
-    byId('quote-status').textContent = 'Could not prepare the image. Copy or print the price breakdown instead.';
+    byId('share-image').textContent = 'Forward as quote';
+    byId('share-image').disabled = false;
+    byId('quote-status').textContent = 'Could not prepare the image. Tap Forward as quote to try again.';
     console.error('Price image failed:', error);
   }
 }
@@ -90,13 +90,6 @@ function setExtras() {
     byId(input).required = enabled;
   }
 }
-function buildQuoteText(quote) {
-  const lines = ['MONSTER MIX — V2 TEST CALCULATION', `${quote.product.name} · ${number(quote.volume)} m³`, `Concrete (${money(quote.product.rate)}/m³): ${money(quote.material)}`, `Delivery${quote.customDelivery ? ' (custom)' : ''}: ${money(quote.delivery)}`];
-  if (quote.pump !== 'none') lines.push(`${quote.pump === 'long' ? 'Long run' : 'Standard'} pump: ${money(quote.pumpCost)}`);
-  if (quote.waitingMinutes !== null) lines.push(`Waiting time (${quote.waitingMinutes} minutes on site): ${money(quote.waiting)}`);
-  lines.push(`Subtotal: ${money(quote.subtotal)}`, `VAT (20%): ${money(quote.vat)}`, `TOTAL INCLUDING VAT: ${money(quote.total)}`, 'Not a payment receipt');
-  return lines.join('\n');
-}
 function renderQuote(quote) {
   byId('quote-empty').hidden = true;
   byId('quote-result').hidden = false;
@@ -109,15 +102,11 @@ function renderQuote(quote) {
   byId('waiting-line').hidden = quote.waitingMinutes === null;
   byId('waiting-description').textContent = `${quote.waitingMinutes ?? 0} min on site · ${quote.allowance} min included`;
   byId('waiting-hint').textContent = `${quote.allowance} minutes included for this volume. Charges follow the existing waiting-time bands.`;
-  quoteText = buildQuoteText(quote);
-  byId('quote-text').value = quoteText;
   preparePriceImage(quote);
 }
 function updateQuote({ submitted = false } = {}) {
   clearErrors();
   clearPriceImage();
-  copySequence++;
-  byId('manual-copy').hidden = true;
   byId('quote-status').textContent = '';
   try {
     const quote = calculateQuote({
@@ -136,7 +125,6 @@ function updateQuote({ submitted = false } = {}) {
     }
   } catch (error) {
     currentQuote = null;
-    quoteText = '';
     byId('quote-result').hidden = true;
     byId('quote-empty').hidden = false;
     byId('quote-status').textContent = 'Complete the fields to calculate the price.';
@@ -164,40 +152,27 @@ byId('use-volume').addEventListener('click', () => {
   } catch (error) { byId('dimension-status').textContent = error.message; error.input?.focus(); }
 });
 form.addEventListener('reset', () => {
-  quoteStarted = false; currentQuote = null; quoteText = ''; copySequence++;
+  quoteStarted = false; currentQuote = null;
   clearPriceImage();
   clearErrors();
   byId('quote-result').hidden = true;
   byId('quote-empty').hidden = false;
-  byId('manual-copy').hidden = true;
   byId('quote-status').textContent = '';
   byId('dimension-status').textContent = 'Volume rounds to 2 decimal places. No wastage allowance is added.';
   byId('waiting-hint').textContent = '30 minutes included up to 3 m³; 45 minutes above 3 m³.';
   // Native reset applies defaults after the reset event (and after microtasks in Safari).
   setTimeout(() => { setExtras(); byId('metres').focus(); }, 0);
 });
-byId('copy-quote').addEventListener('click', async () => {
-  if (!currentQuote) return;
-  const sequence = ++copySequence;
-  try {
-    await navigator.clipboard.writeText(quoteText);
-    if (sequence === copySequence) byId('quote-status').textContent = 'Price breakdown copied.';
-  } catch {
-    if (sequence !== copySequence) return;
-    byId('manual-copy').hidden = false;
-    byId('quote-text').focus(); byId('quote-text').select();
-    byId('quote-status').textContent = 'Automatic copy is unavailable. Select and copy the price breakdown below.';
-  }
-});
-byId('print-quote').addEventListener('click', () => { if (currentQuote) window.print(); });
 byId('share-image').addEventListener('click', async () => {
-  if (!currentQuote || !priceImageFile) return;
+  if (!currentQuote) return;
+  if (!priceImageFile) { clearPriceImage(); preparePriceImage(currentQuote); return; }
   const file = priceImageFile;
   const sequence = imageSequence;
   const data = { files: [file] };
   byId('share-image').disabled = true;
   try {
     if (!navigator.share || !navigator.canShare || !navigator.canShare(data)) {
+      byId('share-fallback').hidden = false;
       byId('image-preview').open = true;
       byId('quote-status').textContent = 'This browser cannot share image files directly. Save the price image and attach it in WhatsApp.';
       return;
@@ -210,6 +185,7 @@ byId('share-image').addEventListener('click', async () => {
     if (error.name === 'AbortError') {
       byId('quote-status').textContent = 'Sharing cancelled. The price image is still ready.';
     } else {
+      byId('share-fallback').hidden = false;
       byId('image-preview').open = true;
       byId('quote-status').textContent = 'Sharing was unavailable. Save the price image and attach it in WhatsApp.';
     }

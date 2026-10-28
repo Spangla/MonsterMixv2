@@ -39,9 +39,9 @@ Enter the load details and tap Calculate. The total updates when those details c
 The real company artwork from the existing PWA icon is used in the header and price image;
 the rest of the interface uses a system font, without guessing the company typeface.
 
-Forward price image uses the native file-sharing menu when the browser supports PNG files.
+Forward as quote is the only action beneath the result. It uses the native file-sharing menu when the browser supports PNG files.
 The driver chooses WhatsApp and the recipient. The app cannot preselect WhatsApp or confirm
-message delivery. Save price image and an inline preview are available as fallbacks.
+message delivery. Save price image and an inline preview appear only when sharing is unsupported or fails.
 All test images are marked V2 TEST CALCULATION and are not payment receipts.
 
 Images are generated locally with canvas, including offline. No customer details or images
