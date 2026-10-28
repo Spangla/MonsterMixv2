@@ -30,5 +30,20 @@ These checks do not replace physical iPhone and Android testing.
 
 After changing cached assets, bump the version in `service-worker.js`. An existing
 V2 session shows a Reload app notice when a new version takes control; it does not
-discard an in-progress quote automatically. Users of the initial V2 copy may need
+discard an in-progress calculation automatically. Users of the initial V2 copy may need
 to reload once more after the first update installs.
+
+## Driver workflow and image forwarding
+
+Enter the load details and tap Calculate. The total updates when those details change.
+The real company artwork from the existing PWA icon is used in the header and price image;
+the rest of the interface uses a system font, without guessing the company typeface.
+
+Forward price image uses the native file-sharing menu when the browser supports PNG files.
+The driver chooses WhatsApp and the recipient. The app cannot preselect WhatsApp or confirm
+message delivery. Save price image and an inline preview are available as fallbacks.
+All test images are marked V2 TEST CALCULATION and are not payment receipts.
+
+Images are generated locally with canvas, including offline. No customer details or images
+are uploaded. Preparing the image before the share tap preserves user activation on mobile.
+Any edit invalidates the previous image; stale asynchronous renders cannot replace it.

@@ -3,29 +3,30 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
-  <meta name="theme-color" content="#102c3b">
+  <meta name="theme-color" content="#003366">
   <meta name="apple-mobile-web-app-title" content="Mix V2 Test">
-  <meta name="description" content="Monster Mix concrete and pump quote calculator — V2 test app.">
+  <meta name="description" content="Monster Mix driver's price calculator for concrete, delivery and pump hire — V2 test app.">
   <title>Monster Mix | V2 Test</title>
   <link rel="stylesheet" href="style.css">
   <link rel="manifest" href="manifest.json">
   <link rel="icon" href="icon-192-beta.png" type="image/png">
   <link rel="apple-touch-icon" href="icon-192-beta.png">
   <script src="pricing.js" defer></script>
+  <script src="price-image.js" defer></script>
   <script src="script.js" defer></script>
 </head>
 <body>
   <header class="site-header"><div class="header-inner">
-    <a class="brand" href="./" aria-label="Monster Mix home"><span class="brand-mark" aria-hidden="true">M<span>M</span></span><span>MONSTER MIX<small>CONCRETE &amp; PUMPS</small></span></a>
+    <a class="brand" href="./" aria-label="Monster Mix home"><img src="icon-512-beta.png" alt="Monster Mix" width="128" height="128"><span>CONCRETE &amp; PUMPS<small>DRIVER’S CALCULATOR</small></span></a>
     <span class="test-badge">V2 / TEST APP</span>
   </div></header>
   <main class="app-shell">
     <div class="update-notice" id="update-notice" role="status" hidden><span>A new version is ready.</span><button type="button" id="refresh-app">Reload app</button></div>
-    <div class="intro"><p class="eyebrow">THE RIGHT MIX. A CLEAR PRICE.</p><h1>Build your quote<span>.</span></h1><p>Concrete, delivery and pump hire. All in one place.</p></div>
+    <div class="intro"><h1>Price calculator</h1><p>Enter the load details to work out the customer’s total.</p></div>
     <div class="workspace">
       <form id="quote-form" novalidate>
         <section class="card" aria-labelledby="concrete-heading">
-          <div class="section-heading"><span class="step">01</span><h2 id="concrete-heading">Your concrete</h2></div>
+          <div class="section-heading"><span class="step">01</span><h2 id="concrete-heading">Concrete</h2></div>
           <div class="field"><label for="product">Concrete grade</label><select id="product" name="product" required></select><p class="hint">Prices per m³, excluding VAT.</p></div>
           <div class="field"><label for="metres">Volume <span class="label-unit">m³</span></label><div class="input-suffix"><input type="number" id="metres" name="metres" inputmode="decimal" min="0.001" step="any" placeholder="e.g. 4.5" required aria-describedby="volume-hint"><span aria-hidden="true">m³</span></div><p class="hint" id="volume-hint">Enter your volume, or use dimensions below.</p></div>
           <details class="dimension-tool">
@@ -51,12 +52,12 @@
           <div class="extra-row"><label class="check-label" for="waitingToggle"><input type="checkbox" id="waitingToggle"><span>Include time on site<small>Add any chargeable waiting time</small></span></label><div class="field revealed-field" id="waiting-field" hidden><label for="waitingMinutes">Total time on site (minutes)</label><input type="number" id="waitingMinutes" inputmode="numeric" min="0" step="1" placeholder="e.g. 60" disabled><p class="hint" id="waiting-hint">30 minutes included up to 3 m³; 45 minutes above 3 m³.</p></div></div>
         </section>
         <p id="form-error" class="form-error" role="alert" hidden></p>
-        <div class="calculate-bar"><button class="button primary" type="submit">Calculate quote <span aria-hidden="true">→</span></button><button class="reset-button" type="reset">Start again</button></div>
+        <div class="calculate-bar"><button class="button primary" type="submit">Calculate <span aria-hidden="true">→</span></button><button class="reset-button" type="reset">Start again</button></div>
       </form>
       <aside class="quote-column">
         <section class="quote-card" id="quote-card" aria-labelledby="quote-heading" tabindex="-1">
-          <div class="quote-heading"><h2 id="quote-heading">Your quote</h2><span class="quote-tag">V2 TEST</span></div>
-          <div id="quote-empty" class="quote-empty"><span class="empty-symbol" aria-hidden="true">m³</span><h3>Let’s put a price on it.</h3><p>Choose your mix and volume,<br>then calculate your quote.</p></div>
+          <div class="quote-heading"><h2 id="quote-heading">Customer total</h2><span class="quote-tag">V2 TEST</span></div>
+          <div id="quote-empty" class="quote-empty"><span class="empty-symbol" aria-hidden="true">£</span><h3>Ready to calculate</h3><p>Enter the concrete and delivery details,<br>then tap Calculate.</p></div>
           <div id="quote-result" hidden>
             <p id="quote-description" class="quote-description"></p>
             <dl class="breakdown">
@@ -68,10 +69,16 @@
               <div><dt>VAT <small>20%</small></dt><dd id="vat"></dd></div>
             </dl>
             <div class="total-block"><span>Total <small>including VAT</small></span><strong id="total"></strong></div>
-            <div class="quote-actions"><button type="button" class="button quote-button" id="copy-quote">Copy quote</button><button type="button" class="button quote-button" id="print-quote">Print / PDF</button></div>
-            <div id="manual-copy" hidden><label for="quote-text">Select and copy your quote:</label><textarea id="quote-text" readonly rows="10"></textarea></div>
+            <div class="share-panel">
+              <button type="button" class="button share-button" id="share-image" disabled>Preparing image…</button>
+              <p class="share-hint">Choose WhatsApp in your phone’s share menu. You can also save the image and attach it.</p>
+              <a class="save-image" id="save-image" download hidden>Save price image</a>
+              <details class="image-preview" id="image-preview" hidden><summary>Preview price image <span aria-hidden="true">+</span></summary><img id="price-image-preview" alt="Monster Mix customer price breakdown"></details>
+            </div>
+            <div class="quote-actions"><button type="button" class="button quote-button" id="copy-quote">Copy price</button><button type="button" class="button quote-button" id="print-quote">Print / PDF</button></div>
+            <div id="manual-copy" hidden><label for="quote-text">Select and copy the price breakdown:</label><textarea id="quote-text" readonly rows="10"></textarea></div>
           </div>
-          <p id="quote-status" class="quote-status" role="status" aria-live="polite"></p><p class="quote-footnote">Test estimate · Monster Mix V2</p>
+          <p id="quote-status" class="quote-status" role="status" aria-live="polite"></p><p class="quote-footnote">V2 test calculation · Not a payment receipt</p>
         </section>
         <details class="rate-card"><summary>View concrete prices <span aria-hidden="true">↗</span></summary><table><caption>Concrete prices per m³, excluding VAT</caption><thead><tr><th scope="col">Grade</th><th scope="col">£ / m³</th></tr></thead><tbody id="rate-table"></tbody></table></details>
       </aside>

@@ -10,6 +10,43 @@ let currentQuote = null;
 let quoteStarted = false;
 let quoteText = '';
 let copySequence = 0;
+let imageSequence = 0;
+let priceImageFile = null;
+let priceImageUrl = null;
+function clearPriceImage() {
+  imageSequence++;
+  priceImageFile = null;
+  if (priceImageUrl) URL.revokeObjectURL(priceImageUrl);
+  priceImageUrl = null;
+  byId('share-image').disabled = true;
+  byId('share-image').textContent = 'Preparing image…';
+  byId('save-image').hidden = true;
+  byId('save-image').removeAttribute('href');
+  byId('image-preview').hidden = true;
+  byId('image-preview').open = false;
+  byId('price-image-preview').removeAttribute('src');
+}
+async function preparePriceImage(quote) {
+  const sequence = imageSequence;
+  try {
+    const file = await MonsterMixPriceImage.create(quote);
+    if (sequence !== imageSequence || quote !== currentQuote) return;
+    priceImageFile = file;
+    priceImageUrl = URL.createObjectURL(file);
+    byId('save-image').href = priceImageUrl;
+    byId('save-image').download = file.name;
+    byId('save-image').hidden = false;
+    byId('price-image-preview').src = priceImageUrl;
+    byId('image-preview').hidden = false;
+    byId('share-image').textContent = 'Forward price image';
+    byId('share-image').disabled = false;
+  } catch (error) {
+    if (sequence !== imageSequence || quote !== currentQuote) return;
+    byId('share-image').textContent = 'Image unavailable';
+    byId('quote-status').textContent = 'Could not prepare the image. Copy or print the price breakdown instead.';
+    console.error('Price image failed:', error);
+  }
+}
 for (const product of PRODUCTS) {
   const option = document.createElement('option');
   option.value = product.id;
@@ -54,10 +91,10 @@ function setExtras() {
   }
 }
 function buildQuoteText(quote) {
-  const lines = ['MONSTER MIX — V2 TEST ESTIMATE', `${quote.product.name} · ${number(quote.volume)} m³`, `Concrete (${money(quote.product.rate)}/m³): ${money(quote.material)}`, `Delivery${quote.customDelivery ? ' (custom)' : ''}: ${money(quote.delivery)}`];
+  const lines = ['MONSTER MIX — V2 TEST CALCULATION', `${quote.product.name} · ${number(quote.volume)} m³`, `Concrete (${money(quote.product.rate)}/m³): ${money(quote.material)}`, `Delivery${quote.customDelivery ? ' (custom)' : ''}: ${money(quote.delivery)}`];
   if (quote.pump !== 'none') lines.push(`${quote.pump === 'long' ? 'Long run' : 'Standard'} pump: ${money(quote.pumpCost)}`);
   if (quote.waitingMinutes !== null) lines.push(`Waiting time (${quote.waitingMinutes} minutes on site): ${money(quote.waiting)}`);
-  lines.push(`Subtotal: ${money(quote.subtotal)}`, `VAT (20%): ${money(quote.vat)}`, `TOTAL INCLUDING VAT: ${money(quote.total)}`);
+  lines.push(`Subtotal: ${money(quote.subtotal)}`, `VAT (20%): ${money(quote.vat)}`, `TOTAL INCLUDING VAT: ${money(quote.total)}`, 'Not a payment receipt');
   return lines.join('\n');
 }
 function renderQuote(quote) {
@@ -74,9 +111,11 @@ function renderQuote(quote) {
   byId('waiting-hint').textContent = `${quote.allowance} minutes included for this volume. Charges follow the existing waiting-time bands.`;
   quoteText = buildQuoteText(quote);
   byId('quote-text').value = quoteText;
+  preparePriceImage(quote);
 }
 function updateQuote({ submitted = false } = {}) {
   clearErrors();
+  clearPriceImage();
   copySequence++;
   byId('manual-copy').hidden = true;
   byId('quote-status').textContent = '';
@@ -91,7 +130,7 @@ function updateQuote({ submitted = false } = {}) {
     currentQuote = quote;
     renderQuote(quote);
     if (submitted) {
-      byId('quote-status').textContent = 'Quote calculated. Updates as you edit.';
+      byId('quote-status').textContent = 'Price calculated. Updates as you edit.';
       if (window.matchMedia('(max-width: 760px)').matches) byId('quote-card').scrollIntoView({ behavior: window.matchMedia('(prefers-reduced-motion: reduce)').matches ? 'auto' : 'smooth', block: 'start' });
       byId('quote-card').focus({ preventScroll: true });
     }
@@ -100,7 +139,7 @@ function updateQuote({ submitted = false } = {}) {
     quoteText = '';
     byId('quote-result').hidden = true;
     byId('quote-empty').hidden = false;
-    byId('quote-status').textContent = 'Complete the fields to calculate a fresh quote.';
+    byId('quote-status').textContent = 'Complete the fields to calculate the price.';
     if (submitted) {
       byId('form-error').textContent = error.message;
       byId('form-error').hidden = false;
@@ -126,6 +165,7 @@ byId('use-volume').addEventListener('click', () => {
 });
 form.addEventListener('reset', () => {
   quoteStarted = false; currentQuote = null; quoteText = ''; copySequence++;
+  clearPriceImage();
   clearErrors();
   byId('quote-result').hidden = true;
   byId('quote-empty').hidden = false;
@@ -141,15 +181,42 @@ byId('copy-quote').addEventListener('click', async () => {
   const sequence = ++copySequence;
   try {
     await navigator.clipboard.writeText(quoteText);
-    if (sequence === copySequence) byId('quote-status').textContent = 'Quote copied.';
+    if (sequence === copySequence) byId('quote-status').textContent = 'Price breakdown copied.';
   } catch {
     if (sequence !== copySequence) return;
     byId('manual-copy').hidden = false;
     byId('quote-text').focus(); byId('quote-text').select();
-    byId('quote-status').textContent = 'Automatic copy is unavailable. Select and copy the quote below.';
+    byId('quote-status').textContent = 'Automatic copy is unavailable. Select and copy the price breakdown below.';
   }
 });
 byId('print-quote').addEventListener('click', () => { if (currentQuote) window.print(); });
+byId('share-image').addEventListener('click', async () => {
+  if (!currentQuote || !priceImageFile) return;
+  const file = priceImageFile;
+  const sequence = imageSequence;
+  const data = { files: [file] };
+  byId('share-image').disabled = true;
+  try {
+    if (!navigator.share || !navigator.canShare || !navigator.canShare(data)) {
+      byId('image-preview').open = true;
+      byId('quote-status').textContent = 'This browser cannot share image files directly. Save the price image and attach it in WhatsApp.';
+      return;
+    }
+    // The file is prepared before the tap, preserving mobile share-menu activation.
+    await navigator.share(data);
+    if (sequence === imageSequence) byId('quote-status').textContent = 'Share menu closed. You can forward the image again if needed.';
+  } catch (error) {
+    if (sequence !== imageSequence) return;
+    if (error.name === 'AbortError') {
+      byId('quote-status').textContent = 'Sharing cancelled. The price image is still ready.';
+    } else {
+      byId('image-preview').open = true;
+      byId('quote-status').textContent = 'Sharing was unavailable. Save the price image and attach it in WhatsApp.';
+    }
+  } finally {
+    if (sequence === imageSequence) byId('share-image').disabled = false;
+  }
+});
 setExtras();
 if ('serviceWorker' in navigator) {
   const wasControlled = Boolean(navigator.serviceWorker.controller);
