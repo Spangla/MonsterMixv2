@@ -1,80 +1,82 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en-GB">
 <head>
   <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Monster Mix V2 — Test</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+  <meta name="theme-color" content="#102c3b">
+  <meta name="apple-mobile-web-app-title" content="Mix V2 Test">
+  <meta name="description" content="Monster Mix concrete and pump quote calculator — V2 test app.">
+  <title>Monster Mix | V2 Test</title>
   <link rel="stylesheet" href="style.css">
   <link rel="manifest" href="manifest.json">
-<link rel="icon" href="icon-192-beta.png" type="image/png">
-<meta name="theme-color" content="#003366">
-
+  <link rel="icon" href="icon-192-beta.png" type="image/png">
+  <link rel="apple-touch-icon" href="icon-192-beta.png">
+  <script src="pricing.js" defer></script>
+  <script src="script.js" defer></script>
 </head>
 <body>
-  <div class="container">
-
-    <h1>Monster Mix Concrete & Pumps</h1>
-    <p role="note"><strong>V2 — TEST VERSION</strong></p>
-    
-    <div class="input-row">
-  <input type="number" id="length" placeholder="Length">
-  <input type="number" id="width" placeholder="Width">
-  <input type="number" id="depth" placeholder="Depth">
-</div>
-    
-    <div class="form-row">
-  <button id="calcM3Btn" onclick="calculatem3()">Calculate (m³)</button>
-</div>
-
-    <!-- Metres Input -->
-    <div class="form-row">
-      <label for="metres">Metres (m³)</label>
-      <input type="number" id="metres" placeholder="Enter cubic metres">
+  <header class="site-header"><div class="header-inner">
+    <a class="brand" href="./" aria-label="Monster Mix home"><span class="brand-mark" aria-hidden="true">M<span>M</span></span><span>MONSTER MIX<small>CONCRETE &amp; PUMPS</small></span></a>
+    <span class="test-badge">V2 / TEST APP</span>
+  </div></header>
+  <main class="app-shell">
+    <div class="update-notice" id="update-notice" role="status" hidden><span>A new version is ready.</span><button type="button" id="refresh-app">Reload app</button></div>
+    <div class="intro"><p class="eyebrow">THE RIGHT MIX. A CLEAR PRICE.</p><h1>Build your quote<span>.</span></h1><p>Concrete, delivery and pump hire. All in one place.</p></div>
+    <div class="workspace">
+      <form id="quote-form" novalidate>
+        <section class="card" aria-labelledby="concrete-heading">
+          <div class="section-heading"><span class="step">01</span><h2 id="concrete-heading">Your concrete</h2></div>
+          <div class="field"><label for="product">Concrete grade</label><select id="product" name="product" required></select><p class="hint">Prices per m³, excluding VAT.</p></div>
+          <div class="field"><label for="metres">Volume <span class="label-unit">m³</span></label><div class="input-suffix"><input type="number" id="metres" name="metres" inputmode="decimal" min="0.001" step="any" placeholder="e.g. 4.5" required aria-describedby="volume-hint"><span aria-hidden="true">m³</span></div><p class="hint" id="volume-hint">Enter your volume, or use dimensions below.</p></div>
+          <details class="dimension-tool">
+            <summary>Work out my volume <span aria-hidden="true">+</span></summary>
+            <p class="hint">For a rectangular area. Choose the unit for each measurement.</p>
+            <div class="dimensions">
+              <div class="field"><label for="length">Length</label><input type="number" id="length" inputmode="decimal" min="0" step="any" placeholder="0"><select id="length-unit" aria-label="Length unit"><option value="m">metres</option><option value="cm">cm</option><option value="mm">mm</option></select></div>
+              <div class="field"><label for="width">Width</label><input type="number" id="width" inputmode="decimal" min="0" step="any" placeholder="0"><select id="width-unit" aria-label="Width unit"><option value="m">metres</option><option value="cm">cm</option><option value="mm">mm</option></select></div>
+              <div class="field"><label for="depth">Depth</label><input type="number" id="depth" inputmode="decimal" min="0" step="any" placeholder="0"><select id="depth-unit" aria-label="Depth unit"><option value="m">metres</option><option value="cm">cm</option><option value="mm">mm</option></select></div>
+            </div>
+            <button class="button secondary" type="button" id="use-volume">Use calculated volume <span aria-hidden="true">↗</span></button>
+            <p class="hint" id="dimension-status" role="status">Volume rounds to 2 decimal places. No wastage allowance is added.</p>
+          </details>
+        </section>
+        <section class="card" aria-labelledby="extras-heading">
+          <div class="section-heading"><span class="step">02</span><h2 id="extras-heading">Delivery &amp; extras</h2></div>
+          <fieldset class="pump-fieldset"><legend>Pump hire</legend><div class="pump-options">
+            <label class="pump-option"><input type="radio" name="pump" value="none" checked><span>No pump<small>£0</small></span></label>
+            <label class="pump-option"><input type="radio" name="pump" value="standard"><span>Standard<small>£350</small></span></label>
+            <label class="pump-option"><input type="radio" name="pump" value="long"><span>Long run<small>£400</small></span></label>
+          </div></fieldset>
+          <div class="extra-row"><label class="check-label" for="customDeliveryToggle"><input type="checkbox" id="customDeliveryToggle"><span>Custom delivery charge<small>Override the automatic delivery price</small></span></label><div class="field revealed-field" id="delivery-field" hidden><label for="customDelivery">Delivery charge (£)</label><input type="number" id="customDelivery" inputmode="decimal" min="0" step="0.01" placeholder="e.g. 80" disabled></div></div>
+          <div class="extra-row"><label class="check-label" for="waitingToggle"><input type="checkbox" id="waitingToggle"><span>Include time on site<small>Add any chargeable waiting time</small></span></label><div class="field revealed-field" id="waiting-field" hidden><label for="waitingMinutes">Total time on site (minutes)</label><input type="number" id="waitingMinutes" inputmode="numeric" min="0" step="1" placeholder="e.g. 60" disabled><p class="hint" id="waiting-hint">30 minutes included up to 3 m³; 45 minutes above 3 m³.</p></div></div>
+        </section>
+        <p id="form-error" class="form-error" role="alert" hidden></p>
+        <div class="calculate-bar"><button class="button primary" type="submit">Calculate quote <span aria-hidden="true">→</span></button><button class="reset-button" type="reset">Start again</button></div>
+      </form>
+      <aside class="quote-column">
+        <section class="quote-card" id="quote-card" aria-labelledby="quote-heading" tabindex="-1">
+          <div class="quote-heading"><h2 id="quote-heading">Your quote</h2><span class="quote-tag">V2 TEST</span></div>
+          <div id="quote-empty" class="quote-empty"><span class="empty-symbol" aria-hidden="true">m³</span><h3>Let’s put a price on it.</h3><p>Choose your mix and volume,<br>then calculate your quote.</p></div>
+          <div id="quote-result" hidden>
+            <p id="quote-description" class="quote-description"></p>
+            <dl class="breakdown">
+              <div><dt>Concrete <small id="quote-rate"></small></dt><dd id="material-cost"></dd></div>
+              <div><dt>Delivery <small id="delivery-description"></small></dt><dd id="delivery-cost"></dd></div>
+              <div id="pump-line" hidden><dt id="pump-description">Pump hire</dt><dd id="pump-cost"></dd></div>
+              <div id="waiting-line" hidden><dt>Waiting time <small id="waiting-description"></small></dt><dd id="waiting-cost"></dd></div>
+              <div class="subtotal-line"><dt>Subtotal</dt><dd id="subtotal"></dd></div>
+              <div><dt>VAT <small>20%</small></dt><dd id="vat"></dd></div>
+            </dl>
+            <div class="total-block"><span>Total <small>including VAT</small></span><strong id="total"></strong></div>
+            <div class="quote-actions"><button type="button" class="button quote-button" id="copy-quote">Copy quote</button><button type="button" class="button quote-button" id="print-quote">Print / PDF</button></div>
+            <div id="manual-copy" hidden><label for="quote-text">Select and copy your quote:</label><textarea id="quote-text" readonly rows="10"></textarea></div>
+          </div>
+          <p id="quote-status" class="quote-status" role="status" aria-live="polite"></p><p class="quote-footnote">Test estimate · Monster Mix V2</p>
+        </section>
+        <details class="rate-card"><summary>View concrete prices <span aria-hidden="true">↗</span></summary><table><caption>Concrete prices per m³, excluding VAT</caption><thead><tr><th scope="col">Grade</th><th scope="col">£ / m³</th></tr></thead><tbody id="rate-table"></tbody></table></details>
+      </aside>
     </div>
-
-    <!-- Product Type -->
-    <div class="form-row">
-      <label for="product">Product Type</label>
-      <select id="product">
-        <option value="135">C10-C15 (£135/m³)</option>
-        <option value="135"selected>C20-C25 (£135/m³)</option>
-        <option value="140">C30 (£140/m³)</option>
-        <option value="145">C35/No Fines (£145/m³)</option>
-        <option value="150">C40 (£150/m³)</option>
-      </select>
-    </div>
-
-    <!-- Pump Options (same toggle style as Delivery/Waiting) -->
-    <div class="form-row">
-      <label><input type="checkbox" id="pump"> Pump required (+£350)</label>
-    </div>
-
-    <div class="form-row">
-      <label><input type="checkbox" id="pumpLong"> Long Run (+£400)</label>
-    </div>
-
-    <!-- Delivery -->
-    <div class="form-row">
-      <label><input type="checkbox" id="customDeliveryToggle"> Custom Delivery</label>
-      <input type="number" id="customDelivery" placeholder="Custom Delivery £" style="display:none;">
-    </div>
-
-    <!-- Waiting Time -->
-    <div class="form-row">
-      <label><input type="checkbox" id="waitingToggle"> Time On Site</label>
-      <input type="number" id="waitingMinutes" placeholder="Minutes" style="display:none;">
-    </div>
-
-    <!-- Calculate Button -->
-    <div class="form-row">
-      <button onclick="calculate()">Calculate Total</button>
-    </div>
-
-    <!-- Results / Receipt Box -->
-    <pre id="results"></pre>
-
-  </div>
-
-  <script src="script.js"></script>
+    <footer class="site-footer"><span>MONSTER MIX <span aria-hidden="true">/</span> V2 TEST</span><span>Pricing update · 28 Oct 2026</span></footer>
+  </main>
 </body>
 </html>

@@ -1,11 +1,12 @@
 const CACHE_PREFIX = 'MonsterMixv2-';
-const CACHE_NAME = `${CACHE_PREFIX}v1`; // bump version when updating files
+const CACHE_NAME = `${CACHE_PREFIX}v2`; // bump version when updating files
 
 const ASSETS_TO_CACHE = [
   './',
   './index.html',
   './style.css',
   './script.js',
+  './pricing.js',
   './manifest.json',
   './icon-192-beta.png',
   './icon-512-beta.png'
@@ -14,9 +15,8 @@ const ASSETS_TO_CACHE = [
 // Install event: cache essential files
 self.addEventListener('install', (event) => {
   event.waitUntil(
-    caches.open(CACHE_NAME).then((cache) => {
-      return cache.addAll(ASSETS_TO_CACHE);
-    })
+    caches.open(CACHE_NAME).then((cache) => cache.addAll(ASSETS_TO_CACHE))
+      .then(() => self.skipWaiting())
   );
 });
 
@@ -31,7 +31,7 @@ self.addEventListener('activate', (event) => {
           }
         })
       )
-    )
+    ).then(() => self.clients.claim())
   );
 });
 
