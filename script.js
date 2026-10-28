@@ -18,6 +18,8 @@ function clearPriceImage() {
   priceImageUrl = null;
   byId('share-image').disabled = true;
   byId('share-image').textContent = 'Preparing image…';
+  byId('save-image').hidden = true;
+  byId('save-image').removeAttribute('href');
   byId('image-preview').hidden = true;
   byId('image-preview').open = false;
   byId('price-image-preview').removeAttribute('src');
@@ -29,6 +31,9 @@ async function preparePriceImage(quote) {
     if (sequence !== imageSequence || quote !== currentQuote) return;
     priceImageFile = file;
     priceImageUrl = URL.createObjectURL(file);
+    byId('save-image').href = priceImageUrl;
+    byId('save-image').download = file.name;
+    byId('save-image').hidden = false;
     byId('price-image-preview').src = priceImageUrl;
     byId('image-preview').hidden = false;
     byId('share-image').textContent = 'Forward as quote';

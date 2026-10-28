@@ -43,9 +43,10 @@ matching reusable company font has been identified. The existing PWA icons are r
 Wordmark source (retrieved 28 Oct 2026):
 https://static.wixstatic.com/media/153d1a_b366021e436247d0bbf2779c6581619e~mv2.jpeg
 
-Forward as quote is the only action beneath the result. It uses the native file-sharing menu when the browser supports PNG files.
+Forward as quote uses the native file-sharing menu when the browser supports PNG files.
+Save as image beneath it downloads the same PNG file. Both actions use the current calculation.
 The driver chooses WhatsApp and the recipient. The app cannot preselect WhatsApp or confirm
-message delivery. Preview quote is available below the button. There are no save, copy or print controls.
+message delivery. Preview quote is available below the buttons. There are no copy or print controls.
 If native image sharing fails, the preview opens so the driver can use the phone's image options.
 The quote image identifies the concrete grade and total volume above the price breakdown.
 All test images are marked V2 TEST CALCULATION and are not payment receipts.
