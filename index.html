@@ -7,14 +7,14 @@
   <meta name="apple-mobile-web-app-title" content="Mix V2 Test">
   <meta name="description" content="Monster Mix driver's price calculator for concrete, delivery and pump hire — V2 test app.">
   <title>Monster Mix | V2 Test</title>
-  <link rel="stylesheet" href="style.css">
-  <link rel="manifest" href="manifest.json">
+  <link rel="stylesheet" href="style.css?v=10">
+  <link rel="manifest" href="manifest.json?v=10">
   <link rel="icon" href="icon-192-beta.png" type="image/png">
   <link rel="apple-touch-icon" href="icon-192-beta.png">
-  <script src="pricing.js" defer></script>
-  <script src="price-image.js" defer></script>
-  <script src="install.js" defer></script>
-  <script src="script.js" defer></script>
+  <script src="pricing.js?v=10" defer></script>
+  <script src="price-image.js?v=10" defer></script>
+  <script src="install.js?v=10" defer></script>
+  <script src="script.js?v=10" defer></script>
 </head>
 <body>
   <header class="site-header"><div class="header-inner">
@@ -30,7 +30,7 @@
       <p id="install-menu-help" hidden>In Chrome, open the ⋮ menu, then tap <strong>Add to Home screen</strong> or <strong>Install app</strong>.</p>
       <p id="install-status" role="status"></p>
     </details>
-    <div class="update-notice" id="update-notice" role="status" hidden><span>A new version is ready.</span><button type="button" id="refresh-app">Reload app</button></div>
+    <div class="update-notice" id="update-notice" role="status" hidden><span id="update-message">A new version is ready.</span><button type="button" id="refresh-app">Reload app</button></div>
     <div class="intro"><h1>Price calculator</h1><p>Enter the load details to work out the customer’s total.</p></div>
     <div class="workspace">
       <form id="quote-form" novalidate>

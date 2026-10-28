@@ -28,10 +28,18 @@ touch targets at least 44px, and safe-area padding. Browser checks covered WebKi
 with iPhone settings at 320px, 390px, 430px and landscape, and Chromium with Pixel settings.
 These checks do not replace physical iPhone and Android testing.
 
-After changing cached assets, bump the version in `service-worker.js`. An existing
+After changing cached assets, bump the cache version and the asset query versions in
+both `index.html` and `service-worker.js` together. Installation requests use cache: reload
+to avoid reusing an older stylesheet from the browser HTTP cache. Service worker
+registration uses updateViaCache: none. An existing
 V2 session shows a Reload app notice when a new version takes control; it does not
 discard an in-progress calculation automatically. Users of the initial V2 copy may need
 to reload once more after the first update installs.
+
+Reload app checks for updates and waits for an installing worker to activate before
+reloading. The one-time recovery URL `./?refresh=10` bypasses an older cached page,
+and the versioned asset URLs bypass the older unversioned files. Offline navigations
+with a query string fall back to the cached index page. Only this app's caches are cleaned.
 
 ## Driver workflow and image forwarding
 

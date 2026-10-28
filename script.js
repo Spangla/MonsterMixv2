@@ -193,7 +193,53 @@ byId('share-image').addEventListener('click', async () => {
 setExtras();
 if ('serviceWorker' in navigator) {
   const wasControlled = Boolean(navigator.serviceWorker.controller);
+  let appRegistration;
+  let lastUpdateCheck = 0;
+  function waitForActivation(worker) {
+    if (worker.state === 'activated') return Promise.resolve();
+    return new Promise((resolve, reject) => {
+      const finish = error => {
+        clearTimeout(timer);
+        worker.removeEventListener('statechange', changed);
+        if (error) reject(error); else resolve();
+      };
+      const changed = () => {
+        if (worker.state === 'activated') finish();
+        else if (worker.state === 'redundant') finish(new Error('Update did not install.'));
+      };
+      const timer = setTimeout(() => finish(new Error('Update timed out.')), 15000);
+      worker.addEventListener('statechange', changed);
+      changed();
+    });
+  }
   navigator.serviceWorker.addEventListener('controllerchange', () => { if (wasControlled) byId('update-notice').hidden = false; });
-  byId('refresh-app').addEventListener('click', () => window.location.reload());
-  window.addEventListener('load', () => { navigator.serviceWorker.register('./service-worker.js').catch(error => console.error('Offline setup failed:', error)); });
+  byId('refresh-app').addEventListener('click', async () => {
+    const button = byId('refresh-app');
+    button.disabled = true;
+    button.textContent = 'Updating…';
+    try {
+      const registration = appRegistration || await navigator.serviceWorker.getRegistration('./');
+      if (registration) {
+        await registration.update();
+        const worker = registration.installing || registration.waiting;
+        if (worker) await waitForActivation(worker);
+      }
+      window.location.reload();
+    } catch {
+      byId('update-message').textContent = 'The update could not finish. Check your connection and try again.';
+      button.disabled = false;
+      button.textContent = 'Try again';
+    }
+  });
+  window.addEventListener('load', () => {
+    navigator.serviceWorker.register('./service-worker.js', { updateViaCache: 'none' })
+      .then(registration => { appRegistration = registration; lastUpdateCheck = Date.now(); })
+      .catch(error => console.error('Offline setup failed:', error));
+  });
+  document.addEventListener('visibilitychange', () => {
+    if (!document.hidden && appRegistration && Date.now() - lastUpdateCheck > 60000) {
+      lastUpdateCheck = Date.now();
+      appRegistration.update().catch(() => { /* Offline use remains available. */ });
+    }
+  });
 }
