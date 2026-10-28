@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Monster Mix V2 — Test</title>
+  <link rel="stylesheet" href="style.css">
+  <link rel="manifest" href="manifest.json">
+<link rel="icon" href="icon-192-beta.png" type="image/png">
+<meta name="theme-color" content="#003366">
+
+</head>
+<body>
+  <div class="container">
+
+    <h1>Monster Mix Concrete & Pumps</h1>
+    <p role="note"><strong>V2 — TEST VERSION</strong></p>
+    
+    <div class="input-row">
+  <input type="number" id="length" placeholder="Length">
+  <input type="number" id="width" placeholder="Width">
+  <input type="number" id="depth" placeholder="Depth">
+</div>
+    
+    <div class="form-row">
+  <button id="calcM3Btn" onclick="calculatem3()">Calculate (m³)</button>
+</div>
+
+    <!-- Metres Input -->
+    <div class="form-row">
+      <label for="metres">Metres (m³)</label>
+      <input type="number" id="metres" placeholder="Enter cubic metres">
+    </div>
+
+    <!-- Product Type -->
+    <div class="form-row">
+      <label for="product">Product Type</label>
+      <select id="product">
+        <option value="135">C10-C15 (£135/m³)</option>
+        <option value="135"selected>C20-C25 (£135/m³)</option>
+        <option value="140">C30 (£140/m³)</option>
+        <option value="145">C35/No Fines (£145/m³)</option>
+        <option value="150">C40 (£150/m³)</option>
+      </select>
+    </div>
+
+    <!-- Pump Options (same toggle style as Delivery/Waiting) -->
+    <div class="form-row">
+      <label><input type="checkbox" id="pump"> Pump required (+£350)</label>
+    </div>
+
+    <div class="form-row">
+      <label><input type="checkbox" id="pumpLong"> Long Run (+£400)</label>
+    </div>
+
+    <!-- Delivery -->
+    <div class="form-row">
+      <label><input type="checkbox" id="customDeliveryToggle"> Custom Delivery</label>
+      <input type="number" id="customDelivery" placeholder="Custom Delivery £" style="display:none;">
+    </div>
+
+    <!-- Waiting Time -->
+    <div class="form-row">
+      <label><input type="checkbox" id="waitingToggle"> Time On Site</label>
+      <input type="number" id="waitingMinutes" placeholder="Minutes" style="display:none;">
+    </div>
+
+    <!-- Calculate Button -->
+    <div class="form-row">
+      <button onclick="calculate()">Calculate Total</button>
+    </div>
+
+    <!-- Results / Receipt Box -->
+    <pre id="results"></pre>
+
+  </div>
+
+  <script src="script.js"></script>
+</body>
+</html>
