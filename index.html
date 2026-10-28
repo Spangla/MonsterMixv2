@@ -13,6 +13,7 @@
   <link rel="apple-touch-icon" href="icon-192-beta.png">
   <script src="pricing.js" defer></script>
   <script src="price-image.js" defer></script>
+  <script src="install.js" defer></script>
   <script src="script.js" defer></script>
 </head>
 <body>
@@ -21,6 +22,14 @@
     <span class="test-badge">V2 / TEST APP</span>
   </div></header>
   <main class="app-shell">
+    <details class="install-options" id="install-options" hidden>
+      <summary>Install app <span aria-hidden="true">⌄</span></summary>
+      <p>Keep Monster Mix on your Home Screen for quick access.</p>
+      <button type="button" class="button primary" id="install-native" hidden>Install app</button>
+      <button type="button" class="button primary" id="install-iphone" hidden>Show iPhone setup</button>
+      <p id="install-menu-help" hidden>In Chrome, open the ⋮ menu, then tap <strong>Add to Home screen</strong> or <strong>Install app</strong>.</p>
+      <p id="install-status" role="status"></p>
+    </details>
     <div class="update-notice" id="update-notice" role="status" hidden><span>A new version is ready.</span><button type="button" id="refresh-app">Reload app</button></div>
     <div class="intro"><h1>Price calculator</h1><p>Enter the load details to work out the customer’s total.</p></div>
     <div class="workspace">
@@ -82,5 +91,26 @@
     </div>
     <footer class="site-footer"><span>MONSTER MIX <span aria-hidden="true">/</span> V2 TEST</span><span>Pricing update · 28 Oct 2026</span></footer>
   </main>
+  <dialog class="install-dialog" id="install-dialog" aria-labelledby="install-title" aria-describedby="install-description">
+    <button type="button" class="install-close" id="install-close" aria-label="Close installation guide">×</button>
+    <img class="install-icon" src="icon-192-beta.png" alt="" width="64" height="64">
+    <h2 id="install-title" tabindex="-1">Keep Monster Mix<br>on your phone</h2>
+    <div id="install-welcome">
+      <p id="install-description">Open your calculator with one tap from your Home Screen.</p>
+      <button type="button" class="button primary install-main" id="install-start" autofocus>Install app</button>
+      <button type="button" class="install-later" id="install-later">Not now</button>
+    </div>
+    <div id="install-steps" hidden>
+      <p class="install-safari-warning" id="install-safari-warning" hidden>Open this link in <strong>Safari</strong> first. Your browser’s menu may offer “Open in Safari”.</p>
+      <ol class="install-step-list">
+        <li><span class="install-step-number">1</span><div><strong>Tap Share</strong><svg class="install-share-icon" viewBox="0 0 32 36" fill="none" stroke="currentColor" stroke-width="2.4" role="img" aria-label="Square with an arrow pointing upwards"><path d="M9 13H4v20h24V13h-5M16 24V2M8 10l8-8 8 8"/></svg><p>Square with an upward arrow. Or tap Page Menu (⋯), then <b>Share</b>.</p></div></li>
+        <li><span class="install-step-number">2</span><div><strong>Tap Add to Home Screen</strong><p>Scroll down the Share menu to find it.</p></div></li>
+        <li><span class="install-step-number">3</span><div><strong>Tap Add</strong><p>Keep <b>Open as Web App</b> on, if shown. Next time, open the Monster Mix icon.</p></div></li>
+      </ol>
+      <details class="install-missing"><summary>Can’t find Add to Home Screen?</summary><p>Scroll to the bottom of the Share menu, tap <strong>Edit Actions</strong> and add it to the list.</p></details>
+      <button type="button" class="button primary install-main" id="install-done">Got it</button>
+    </div>
+    <label class="install-remember"><input type="checkbox" id="install-remember"> Don’t show again in this browser</label>
+  </dialog>
 </body>
 </html>

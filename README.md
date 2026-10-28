@@ -54,3 +54,19 @@ All test images are marked V2 TEST CALCULATION and are not payment receipts.
 Images are generated locally with canvas, including offline. No customer details or images
 are uploaded. Preparing the image before the share tap preserves user activation on mobile.
 Any edit invalidates the previous image; stale asynchronous renders cannot replace it.
+
+## Installation guidance
+
+iPhone/iPad browser visits show an optional install welcome, followed by Safari's
+Share > Add to Home Screen > Add steps. Other iPhone browsers are directed to Safari.
+Not now/Got it suppresses repeat automatic guidance in the current tab session.
+Don't show again stores a preference in this browser; setup remains available from
+the Install app dropdown. Preferences fail safely if browser storage is blocked.
+
+Android keeps the browser's native beforeinstallprompt default behavior. The Install app
+dropdown can also invoke an available native prompt; a browser-menu instruction is
+shown otherwise. The browser controls eligibility and whether an automatic popup appears.
+
+Home Screen app launches (iOS standalone or standalone/fullscreen/minimal-ui display mode)
+hide all installation controls and open directly to the calculator. Browsers do not
+provide reliable cross-context detection of an existing iPhone installation.

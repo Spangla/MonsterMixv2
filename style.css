@@ -113,6 +113,34 @@ th:last-child, td:last-child { text-align: right; }
 .site-footer { margin-top: 40px; padding: 22px 0; border-top: 1px solid #344250; display: flex; justify-content: space-between; gap: 14px; color: var(--muted-on-black); font-size: 10px; letter-spacing: .5px; }
 .site-footer > span:first-child { font-weight: 700; }
 .site-footer > span > span { margin: 0 6px; }
+.install-options { margin-bottom: 24px; padding: 0 16px 8px; color: var(--ink); background: white; border: 1px solid #78a2c7; border-radius: 9px; }
+.install-options summary { font-size: 15px; }
+.install-options p { font-size: 14px; margin: 4px 0 12px; }
+.install-options .button { width: 100%; }
+.install-options #install-status:empty { display: none; }
+.install-dialog { width: min(430px, calc(100% - 28px)); max-height: calc(100vh - 40px); max-height: calc(100dvh - 40px - env(safe-area-inset-top) - env(safe-area-inset-bottom)); padding: 30px 24px 24px; color: var(--ink); background: white; border: 0; border-radius: 20px; overflow-y: auto; overscroll-behavior: contain; text-align: center; box-shadow: 0 12px 60px #0006; }
+.install-dialog:not([open]) { display: none; }
+.install-dialog::backdrop { background: #000a; }
+.install-close { position: absolute; top: 6px; right: 6px; width: 44px; height: 44px; padding: 0; border: 0; border-radius: 50%; background: transparent; color: #536d80; font-size: 28px; }
+.install-icon { display: block; margin: 0 auto 20px; border-radius: 14px; }
+.install-dialog h2 { font-size: 26px; line-height: 1.2; margin: 0 0 16px; }
+.install-dialog.is-guiding { padding-top: 44px; }
+.install-dialog.is-guiding .install-icon { display: none; }
+.install-dialog.is-guiding h2 { font-size: 24px; }
+#install-description { font-size: 16px; line-height: 1.6; color: var(--muted); margin: 0 0 24px; }
+.install-main { display: flex; width: 100%; justify-content: center; font-size: 17px; }
+.install-later { display: block; width: 100%; min-height: 48px; margin-top: 8px; color: var(--muted); border: 0; background: transparent; font-size: 16px; }
+.install-remember { display: flex; align-items: center; justify-content: center; gap: 10px; min-height: 44px; padding-top: 12px; font-size: 12px; color: var(--muted); text-align: left; }
+.install-safari-warning { text-align: left; padding: 12px; border: 1px solid #86acd0; border-radius: 6px; background: #edf3f9; font-size: 14px; }
+.install-step-list { list-style: none; padding: 0; margin: 22px 0 10px; text-align: left; }
+.install-step-list li { display: flex; gap: 12px; margin-bottom: 22px; }
+.install-step-number { flex-shrink: 0; display: grid; place-items: center; width: 30px; height: 30px; color: white; background: var(--navy); border-radius: 50%; font-size: 15px; font-weight: 750; }
+.install-step-list strong { display: inline; font-size: 17px; }
+.install-step-list p { margin: 7px 0 0; color: var(--muted); font-size: 15px; line-height: 1.6; }
+.install-share-icon { display: inline-block; width: 23px; height: 27px; vertical-align: middle; color: #0065bb; margin-left: 10px; }
+.install-missing { text-align: left; border-top: 1px solid var(--line); margin-bottom: 16px; }
+.install-missing summary { font-size: 13px; }
+.install-missing p { font-size: 14px; margin: 0 0 16px; color: var(--muted); }
 @media (max-width: 760px) {
   .header-inner { padding: 6px max(18px, env(safe-area-inset-right)) 6px max(18px, env(safe-area-inset-left)); }
   .brand { gap: 0; }
@@ -147,7 +175,7 @@ th:last-child, td:last-child { text-align: right; }
   .brand img { width: 180px; height: auto; }
   .brand small, .test-badge { color: black; }
   .app-shell { padding: 20px; }
-  .intro, #quote-form, .rate-card, .share-panel, .site-footer, .quote-status, .update-notice { display: none !important; }
+  .intro, #quote-form, .rate-card, .share-panel, .site-footer, .quote-status, .update-notice, .install-options, .install-dialog { display: none !important; }
   .workspace { display: block; }
   .quote-column { position: static; }
   .quote-card { background: white; color: black; box-shadow: none; border: 1px solid #aaa; break-inside: avoid; }
