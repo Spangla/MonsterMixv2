@@ -1,17 +1,17 @@
-# Monster Mix V2 — Test
+# Monster Mix — Driver’s Price Calculator
 
-Development copy of Spangla/Testbedbeta at commit a46080fb71e0c720eaf3dda0766eaa3088a1e331.
+Published calculator for concrete delivery drivers, based on Spangla/Testbedbeta at commit a46080fb71e0c720eaf3dda0766eaa3088a1e331.
 
-The live app remains in Spangla/Testbedbeta. Make development changes in this repository only.
+The older app remains separate in Spangla/Testbedbeta. Updates here publish this calculator only.
 Concrete prices were updated from Mike's supplied price list on 28 Oct 2026.
 All eleven grades are listed in `pricing.js`; monetary amounts there are integer pence.
 Delivery bands, pump charges, 20% VAT, and waiting-time rules retain the existing setup.
 Mike confirmed keeping free delivery above 30 m³ and the existing waiting boundaries.
 
-GitHub Pages uses branch main, folder / (root). Test address:
+GitHub Pages uses branch main, folder / (root). App address:
 https://spangla.github.io/MonsterMixv2/
 
-The test app has its own name, install scope, and cache prefix. Its service worker only
+This app has its own install scope and cache prefix. Its service worker only
 cleans up MonsterMixv2 caches. The original app's existing service worker can still clear
 other caches on the same origin when it activates; use a separate browser profile for
 offline testing if that happens. This does not change the original app's source files.
@@ -32,8 +32,8 @@ After changing cached assets, bump the cache version and the asset query version
 both `index.html` and `service-worker.js` together. Installation requests use cache: reload
 to avoid reusing an older stylesheet from the browser HTTP cache. Service worker
 registration uses updateViaCache: none. An existing
-V2 session shows a Reload app notice when a new version takes control; it does not
-discard an in-progress calculation automatically. Users of the initial V2 copy may need
+session shows a Reload app notice when a new version takes control; it does not
+discard an in-progress calculation automatically. Users of an older copy may need
 to reload once more after the first update installs.
 
 Reload app checks for updates and waits for an installing worker to activate before
@@ -57,7 +57,7 @@ The driver chooses WhatsApp and the recipient. The app cannot preselect WhatsApp
 message delivery. Preview quote is available below the buttons. There are no copy or print controls.
 If native image sharing fails, the preview opens so the driver can use the phone's image options.
 The quote image identifies the concrete grade and total volume above the price breakdown.
-All test images are marked V2 TEST CALCULATION and are not payment receipts.
+Forwarded images are labelled Quote and are not payment receipts.
 
 Images are generated locally with canvas, including offline. No customer details or images
 are uploaded. Preparing the image before the share tap preserves user activation on mobile.

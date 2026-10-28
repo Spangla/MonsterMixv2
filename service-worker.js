@@ -1,16 +1,16 @@
 const CACHE_PREFIX = 'MonsterMixv2-';
-const CACHE_NAME = `${CACHE_PREFIX}v10`; // bump this and the asset query versions together
+const CACHE_NAME = `${CACHE_PREFIX}v11`; // bump this and the asset query versions together
 
 const ASSETS_TO_CACHE = [
   './',
   './index.html',
-  './style.css?v=10',
-  './script.js?v=10',
-  './pricing.js?v=10',
-  './price-image.js?v=10',
-  './install.js?v=10',
+  './style.css?v=11',
+  './script.js?v=11',
+  './pricing.js?v=11',
+  './price-image.js?v=11',
+  './install.js?v=11',
   './brand-wordmark.jpeg',
-  './manifest.json?v=10',
+  './manifest.json?v=11',
   './icon-192-beta.png',
   './icon-512-beta.png'
 ];

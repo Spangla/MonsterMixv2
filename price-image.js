@@ -78,7 +78,7 @@
     fitText(context, 'including VAT', 76, y + 260, 250, 24);
     fitText(context, money(quote.total), width - 76, y + 254, 650, 68, 700, 'right');
     context.fillStyle = '#536d80';
-    fitText(context, 'V2 TEST CALCULATION', 64, y + 359, 952, 23, 700);
+    fitText(context, 'MONSTER MIX CONCRETE & PUMPS', 64, y + 359, 952, 23, 700);
     fitText(context, 'Not a payment receipt', 64, y + 398, 952, 23);
     const blob = await new Promise((resolve, reject) => canvas.toBlob(result => result ? resolve(result) : reject(new Error('Image creation failed.')), 'image/png'));
     return new File([blob], `MonsterMix-quote-${quote.product.id}-${quote.volume}m3.png`, { type: 'image/png' });

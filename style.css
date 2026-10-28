@@ -13,7 +13,6 @@ button, a, input, select, summary, textarea { -webkit-tap-highlight-color: trans
 .brand { color: inherit; text-decoration: none; display: flex; align-items: center; gap: 20px; font-size: 14px; font-weight: 750; letter-spacing: 1.3px; line-height: 1.3; }
 .brand img { display: block; width: 224px; height: auto; flex-shrink: 0; }
 .brand small { display: block; font-size: 10px; letter-spacing: 1.8px; margin-top: 8px; color: var(--muted); }
-.test-badge { color: var(--navy); font-size: 10px; letter-spacing: 1.3px; font-weight: 750; border: 1px solid #7aa7cb; border-radius: 4px; padding: 7px 10px; white-space: nowrap; }
 .app-shell { max-width: 1160px; margin: auto; padding: 46px max(32px, env(safe-area-inset-right)) env(safe-area-inset-bottom) max(32px, env(safe-area-inset-left)); }
 .update-notice { display: flex; justify-content: space-between; align-items: center; gap: 16px; margin-bottom: 20px; padding: 10px 14px; background: #e1effc; border: 1px solid #8db9dd; border-radius: 6px; font-size: 13px; }
 .update-notice button { min-height: 44px; border: 0; background: transparent; font-weight: 700; color: var(--navy); text-decoration: underline; }
@@ -74,7 +73,6 @@ input[type="radio"], input[type="checkbox"] { accent-color: var(--navy); width: 
 .quote-card { color: white; background: linear-gradient(145deg, #074c82, #003366); border-radius: 12px; padding: 28px; box-shadow: 0 12px 25px #00336612; }
 .quote-heading { display: flex; align-items: center; justify-content: space-between; gap: 10px; padding-bottom: 22px; border-bottom: 1px solid #3a5260; }
 .quote-heading h2 { font-size: 21px; }
-.quote-tag { font-size: 9px; letter-spacing: 1.5px; color: #d0e7fb; }
 .quote-empty { text-align: center; padding: 34px 0 26px; }
 .empty-symbol { width: 65px; height: 65px; margin: 0 auto 22px; display: grid; place-items: center; background: #195b91; color: white; border-radius: 12px; border: 1px solid #72a3cc; font-size: 25px; font-weight: 750; }
 .quote-empty h3 { font-size: 18px; margin: 0 0 10px; letter-spacing: -.4px; }
@@ -144,7 +142,6 @@ th:last-child, td:last-child { text-align: right; }
   .brand { gap: 0; }
   .brand img { width: clamp(160px, 52vw, 224px); height: auto; }
   .brand > span { display: none; }
-  .test-badge { font-size: 9px; padding: 6px 9px; letter-spacing: .7px; }
   .app-shell { padding: 28px max(18px, env(safe-area-inset-right)) env(safe-area-inset-bottom) max(18px, env(safe-area-inset-left)); max-width: 560px; }
   .intro { margin-bottom: 25px; }
   .intro > p:last-child { font-size: 13px; }
@@ -171,12 +168,11 @@ th:last-child, td:last-child { text-align: right; }
   body { background: white; }
   .site-header { color: black; background: white; border-color: black; }
   .brand img { width: 180px; height: auto; }
-  .brand small, .test-badge { color: black; }
+  .brand small { color: black; }
   .app-shell { padding: 20px; }
   .intro, #quote-form, .rate-card, .share-panel, .site-footer, .quote-status, .update-notice, .install-options, .install-dialog { display: none !important; }
   .workspace { display: block; }
   .quote-column { position: static; }
   .quote-card { background: white; color: black; box-shadow: none; border: 1px solid #aaa; break-inside: avoid; }
   .quote-card * { color: black !important; }
-  .quote-tag::after { content: ' — TEST CALCULATION'; }
 }
