@@ -11,7 +11,7 @@
         const image = new Image();
         image.onload = () => resolve(image);
         image.onerror = () => { logoPromise = null; reject(new Error('Company logo could not be loaded.')); };
-        image.src = './icon-512-beta.png';
+        image.src = './brand-wordmark.jpeg';
       });
     }
     return logoPromise;
@@ -43,10 +43,10 @@
     context.fillRect(0, 0, width, canvas.height);
     context.fillStyle = '#003366';
     context.fillRect(0, 0, width, 224);
-    context.drawImage(logo, 48, 16, 192, 192);
+    context.drawImage(logo, 48, 48, 240, 108);
     context.fillStyle = '#ffffff';
-    fitText(context, 'CONCRETE & PUMPS', 288, 84, 720, 25, 700);
-    fitText(context, 'Price breakdown', 288, 144, 720, 46, 700);
+    fitText(context, 'CONCRETE & PUMPS', 330, 84, 686, 25, 700);
+    fitText(context, 'Price breakdown', 330, 144, 686, 46, 700);
     context.fillStyle = '#075188';
     context.fillRect(0, 224, width, 8);
     context.fillStyle = '#003366';

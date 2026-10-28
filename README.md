@@ -36,8 +36,12 @@ to reload once more after the first update installs.
 ## Driver workflow and image forwarding
 
 Enter the load details and tap Calculate. The total updates when those details change.
-The real company artwork from the existing PWA icon is used in the header and price image;
-the rest of the interface uses a system font, without guessing the company typeface.
+The real company wordmark from the company website is used in the header and price image;
+the rest of the interface uses a system font. The website header uses an image, so no
+matching reusable company font has been identified. The existing PWA icons are retained.
+
+Wordmark source (retrieved 28 Oct 2026):
+https://static.wixstatic.com/media/153d1a_b366021e436247d0bbf2779c6581619e~mv2.jpeg
 
 Forward as quote is the only action beneath the result. It uses the native file-sharing menu when the browser supports PNG files.
 The driver chooses WhatsApp and the recipient. The app cannot preselect WhatsApp or confirm

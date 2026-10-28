@@ -1,5 +1,5 @@
 const CACHE_PREFIX = 'MonsterMixv2-';
-const CACHE_NAME = `${CACHE_PREFIX}v4`; // bump version when updating files
+const CACHE_NAME = `${CACHE_PREFIX}v5`; // bump version when updating files
 
 const ASSETS_TO_CACHE = [
   './',
@@ -8,6 +8,7 @@ const ASSETS_TO_CACHE = [
   './script.js',
   './pricing.js',
   './price-image.js',
+  './brand-wordmark.jpeg',
   './manifest.json',
   './icon-192-beta.png',
   './icon-512-beta.png'
