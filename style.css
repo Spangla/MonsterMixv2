@@ -95,7 +95,6 @@ input[type="radio"], input[type="checkbox"] { accent-color: var(--navy); width: 
 .share-button { background: white; color: var(--navy); width: 100%; }
 .share-button:hover { background: #dcecff; }
 .share-button:disabled { cursor: wait; opacity: .75; }
-.save-image { color: white; display: inline-flex; align-items: center; font-size: 12px; min-height: 44px; text-underline-offset: 4px; }
 .image-preview { border-top: 1px solid #638cb3; margin-top: 8px; }
 .image-preview summary { font-size: 12px; }
 .image-preview img { display: block; width: 100%; height: auto; border-radius: 4px; background: white; }

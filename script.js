@@ -18,9 +18,6 @@ function clearPriceImage() {
   priceImageUrl = null;
   byId('share-image').disabled = true;
   byId('share-image').textContent = 'Preparing image…';
-  byId('save-image').hidden = true;
-  byId('share-fallback').hidden = true;
-  byId('save-image').removeAttribute('href');
   byId('image-preview').hidden = true;
   byId('image-preview').open = false;
   byId('price-image-preview').removeAttribute('src');
@@ -32,9 +29,6 @@ async function preparePriceImage(quote) {
     if (sequence !== imageSequence || quote !== currentQuote) return;
     priceImageFile = file;
     priceImageUrl = URL.createObjectURL(file);
-    byId('save-image').href = priceImageUrl;
-    byId('save-image').download = file.name;
-    byId('save-image').hidden = false;
     byId('price-image-preview').src = priceImageUrl;
     byId('image-preview').hidden = false;
     byId('share-image').textContent = 'Forward as quote';
@@ -43,7 +37,7 @@ async function preparePriceImage(quote) {
     if (sequence !== imageSequence || quote !== currentQuote) return;
     byId('share-image').textContent = 'Forward as quote';
     byId('share-image').disabled = false;
-    byId('quote-status').textContent = 'Could not prepare the image. Tap Forward as quote to try again.';
+    byId('quote-status').textContent = 'Could not prepare the quote image. Tap Forward as quote to try again.';
     console.error('Price image failed:', error);
   }
 }
@@ -172,9 +166,8 @@ byId('share-image').addEventListener('click', async () => {
   byId('share-image').disabled = true;
   try {
     if (!navigator.share || !navigator.canShare || !navigator.canShare(data)) {
-      byId('share-fallback').hidden = false;
       byId('image-preview').open = true;
-      byId('quote-status').textContent = 'This browser cannot share image files directly. Save the price image and attach it in WhatsApp.';
+      byId('quote-status').textContent = 'This browser cannot forward images directly. Touch and hold the preview for your phone’s image options.';
       return;
     }
     // The file is prepared before the tap, preserving mobile share-menu activation.
@@ -183,11 +176,10 @@ byId('share-image').addEventListener('click', async () => {
   } catch (error) {
     if (sequence !== imageSequence) return;
     if (error.name === 'AbortError') {
-      byId('quote-status').textContent = 'Sharing cancelled. The price image is still ready.';
+      byId('quote-status').textContent = 'Sharing cancelled. The quote is still ready.';
     } else {
-      byId('share-fallback').hidden = false;
       byId('image-preview').open = true;
-      byId('quote-status').textContent = 'Sharing was unavailable. Save the price image and attach it in WhatsApp.';
+      byId('quote-status').textContent = 'Sharing was unavailable. Touch and hold the preview for your phone’s image options.';
     }
   } finally {
     if (sequence === imageSequence) byId('share-image').disabled = false;

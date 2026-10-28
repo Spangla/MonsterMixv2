@@ -46,13 +46,13 @@
     context.drawImage(logo, 48, 48, 240, 108);
     context.fillStyle = '#ffffff';
     fitText(context, 'CONCRETE & PUMPS', 330, 84, 686, 25, 700);
-    fitText(context, 'Price breakdown', 330, 144, 686, 46, 700);
+    fitText(context, 'Quote', 330, 144, 686, 46, 700);
     context.fillStyle = '#075188';
     context.fillRect(0, 224, width, 8);
     context.fillStyle = '#003366';
-    fitText(context, `${quote.product.name} · ${volumeFormat.format(quote.volume)} m³`, 64, 308, 952, 36, 700);
+    fitText(context, `Concrete grade: ${quote.product.name}`, 64, 308, 952, 36, 700);
     context.fillStyle = '#536d80';
-    fitText(context, 'All line items below exclude VAT', 64, 354, 952, 24);
+    fitText(context, `Total volume: ${volumeFormat.format(quote.volume)} m³`, 64, 354, 952, 28);
     let y = 408;
     for (const line of lines) {
       context.fillStyle = '#16364e';
@@ -81,7 +81,7 @@
     fitText(context, 'V2 TEST CALCULATION', 64, y + 359, 952, 23, 700);
     fitText(context, 'Not a payment receipt', 64, y + 398, 952, 23);
     const blob = await new Promise((resolve, reject) => canvas.toBlob(result => result ? resolve(result) : reject(new Error('Image creation failed.')), 'image/png'));
-    return new File([blob], `MonsterMix-price-${quote.product.id}-${quote.volume}m3.png`, { type: 'image/png' });
+    return new File([blob], `MonsterMix-quote-${quote.product.id}-${quote.volume}m3.png`, { type: 'image/png' });
   }
   root.MonsterMixPriceImage = Object.freeze({ create });
 })(globalThis);

@@ -45,7 +45,9 @@ https://static.wixstatic.com/media/153d1a_b366021e436247d0bbf2779c6581619e~mv2.j
 
 Forward as quote is the only action beneath the result. It uses the native file-sharing menu when the browser supports PNG files.
 The driver chooses WhatsApp and the recipient. The app cannot preselect WhatsApp or confirm
-message delivery. Save price image and an inline preview appear only when sharing is unsupported or fails.
+message delivery. Preview quote is available below the button. There are no save, copy or print controls.
+If native image sharing fails, the preview opens so the driver can use the phone's image options.
+The quote image identifies the concrete grade and total volume above the price breakdown.
 All test images are marked V2 TEST CALCULATION and are not payment receipts.
 
 Images are generated locally with canvas, including offline. No customer details or images
